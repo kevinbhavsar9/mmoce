@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon backend/server",
+    "proxy": "http://localhost:5000/",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d"
   },
