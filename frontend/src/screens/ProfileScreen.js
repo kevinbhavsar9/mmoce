@@ -13,7 +13,7 @@ const ProfileScreen = ({ location, history }) => {
   const [message, setMessage] = useState();
 
   const userDetail = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetail;
+  const { error, user } = userDetail;
   //   console.log(userDetail);
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -38,7 +38,7 @@ const ProfileScreen = ({ location, history }) => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, userDetail]);
+  }, [dispatch, history, userInfo, userDetail, user]);
 
   const submitHandler = (e) => {
     console.log("hi");

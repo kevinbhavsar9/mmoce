@@ -12,7 +12,7 @@ import {
   Card,
   ListGroupItem,
 } from "react-bootstrap";
-import Message from "../components/Message";
+// import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 //history--- redirect
