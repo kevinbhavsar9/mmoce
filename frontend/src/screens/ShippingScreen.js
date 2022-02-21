@@ -33,12 +33,6 @@ const ShippingScreen = ({ history }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(address);
-    console.log(city);
-    console.log(postalCode);
-    console.log(country);
-  }, [address, city, postalCode, country]);
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 />
