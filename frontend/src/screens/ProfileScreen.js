@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { ListMyOrders } from "../actions/orderActions";
-import { accepts } from "express/lib/request";
+// import { accepts } from "express/lib/request";
 
 const ProfileScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
