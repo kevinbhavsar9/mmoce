@@ -40,24 +40,49 @@ const deleteProduct = asyncHandler(async (req, res) => {
   res.json(product);
 });
 
+//@desc   Create product by admin
+//@route   POST /api/products
+//@access  Private/admin
+const createProduct = asyncHandler(async (req, res) => {
+  const product = new Product({
+    name: "Sample Name",
+    price: 0,
+    user: req.user._id,
+    image: "/images/sample.jpg",
+    brand: "Sample Brand",
+    category: "Sample Category",
+    countInStock: 0,
+    numReviews: 0,
+    description: "Sample description",
+  });
+
+  const createProduct = await product.save();
+  res.status(201).json(createProduct);
+});
+
 //@desc    Update product by admin
 //@route   PUT /api/products/:id
 //@access  Private/admin
 const updateProduct = asyncHandler(async (req, res) => {
+  // console.log(req.body);
+  const { name, price, description, image, brand, category, countInStock } =
+    req.body;
+
   const product = await Product.findById(req.params.id);
   if (product) {
-    product.name = req.body.name || product.name;
-    product.price = req.body.price || product.price;
+    product.name = name;
+    product.price = price;
+    product.description = description;
+    product.image = image;
+    product.brand = brand;
+    product.category = category;
+    product.countInStock = countInStock;
 
     //save is used when something is updated
     const updatedProduct = await product.save();
 
     res.json({
-      _id: updatedProduct._id,
-      name: updatedProduct.name,
-      price: updatedProduct.price,
-      category: updatedProduct.category,
-      brand: updatedProduct.brand,
+      updatedProduct,
     });
   } else {
     res.status(404);
@@ -65,4 +90,10 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 });
 
-export { getProductById, getProducts, deleteProduct, updateProduct };
+export {
+  getProductById,
+  getProducts,
+  deleteProduct,
+  updateProduct,
+  createProduct,
+};
