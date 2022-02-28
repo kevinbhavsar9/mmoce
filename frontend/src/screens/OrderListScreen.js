@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Alert, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
-import { ListOrders } from "../actions/orderActions";
+import { ListOrders, getOrderDetails } from "../actions/orderActions";
 
 const OrderListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -20,7 +20,11 @@ const OrderListScreen = ({ history, match }) => {
     } else {
       dispatch(ListOrders());
     }
-  }, [dispatch, history]);
+  }, [dispatch, history, userInfo.isAdmin]);
+
+  const handleDetail = (id) => {
+    dispatch(getOrderDetails(id));
+  };
 
   return (
     <>
@@ -73,7 +77,11 @@ const OrderListScreen = ({ history, match }) => {
 
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
-                      <Button variant="light" className="btn-sm">
+                      <Button
+                        onClick={() => handleDetail(order._id)}
+                        variant="light"
+                        className="btn-sm"
+                      >
                         Details
                       </Button>
                     </LinkContainer>

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { ListMyOrders } from "../actions/orderActions";
-// import { accepts } from "express/lib/request";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userconstants";
 
 const ProfileScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
@@ -38,7 +38,8 @@ const ProfileScreen = ({ location, history }) => {
       history.push("/login");
     } else {
       //   console.log(Object.keys(userDetail).length);
-      if (Object.keys(userDetail).length === 1) {
+      if (Object.keys(userDetail).length === 1 || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile"));
         dispatch(ListMyOrders());
       } else {
@@ -46,7 +47,7 @@ const ProfileScreen = ({ location, history }) => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, userDetail, user]);
+  }, [dispatch, history, userInfo, userDetail, user, success]);
 
   const submitHandler = (e) => {
     console.log("hi");

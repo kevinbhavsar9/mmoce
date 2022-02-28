@@ -26,6 +26,7 @@ import {
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
+  console.log(orderId);
   const [sdkReady, setSdkReady] = useState(false);
   const dispatch = useDispatch();
 
@@ -80,7 +81,7 @@ const OrderScreen = ({ match, history }) => {
         setSdkReady(true);
       }
     }
-  }, [dispatch, order, orderId, successPay, successDeliver]);
+  }, [dispatch, order, orderId, successPay, successDeliver, history, userInfo]);
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
