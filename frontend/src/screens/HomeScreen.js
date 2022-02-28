@@ -4,16 +4,21 @@ import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Paginate from "../components/Paginate";
 import { listProducts } from "../actions/productActions";
-const HomeScreen = () => {
+const HomeScreen = ({ match }) => {
+  const keyword = match.params.keyword;
+
+  const pageNumber = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   // console.log(products);
 
@@ -22,23 +27,31 @@ const HomeScreen = () => {
       {/* {console.log(loading)} */}
       <h1>Latest Products</h1>
 
-      <Row>
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <h3>
-            <Message variant="danger">{error}</Message>
-          </h3>
-        ) : (
-          products &&
-          products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
-              {/* <h3>{product.name}</h3> */}
-            </Col>
-          ))
-        )}
-      </Row>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <h3>
+          <Message variant="danger">{error}</Message>
+        </h3>
+      ) : (
+        <>
+          <Row>
+            {products &&
+              products.map((product) => (
+                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                  <Product product={product} />
+                  {/* <h3>{product.name}</h3> */}
+                </Col>
+              ))}
+          </Row>
+          <Paginate
+            pages={pages}
+            page={page}
+            isAdmin={false}
+            keyword={keyword ? keyword : ""}
+          />
+        </>
+      )}
     </>
   );
 };

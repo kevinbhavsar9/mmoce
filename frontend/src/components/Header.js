@@ -1,9 +1,11 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import "../App.css";
+import SearchBox from "./SearchBox";
 import { logout } from "../actions/userActions";
 const Header = () => {
   const history = useHistory();
@@ -24,8 +26,14 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>V-Shop</Navbar.Brand>
           </LinkContainer>
+
+          <SearchBox />
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="pop">
+            {/* passing history to search component */}
+            {/* <Route render={({ history }) => <SearchBox history={history} />} /> */}
+
             <Nav className="ml-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>

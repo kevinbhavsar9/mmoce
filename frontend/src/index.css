@@ -22,3 +22,7 @@ h2 {
   font-size: 1.4 rem;
   padding: 0.5rem 0;
 }
+.flex {
+  display: flex !important;
+  margin-left: 2rem;
+}

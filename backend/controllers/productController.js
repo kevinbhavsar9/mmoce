@@ -6,9 +6,30 @@ import Product from "../models/productModel.js";
 //@route   GET /api/products
 //@access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  //pagination code
+  const pageSize = 2;
+  const page = Number(req.query.pageNumber) || 1;
+  //pagination code end
+
+  //search functionlaity
+  const keyword = req.query.keyword
+    ? {
+        // to get required product for similar keyword(search)
+        name: {
+          //used regular expression
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+  // console.log(keyword);
+
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
   // throw new Error("Some error");
-  res.json(products);
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 //@desc    Fetch single products
