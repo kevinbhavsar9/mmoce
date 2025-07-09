@@ -12,16 +12,21 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 //in ES style file must have dotjs behind their name
 // const products = require("./data/products");
 import products from "./data/products.js";
+import cors from "cors";
 dotenv.config();
+
 
 connectDB();
 const app = express();
+
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
 //middleware to get data from url requests
+app.use(cors());
+// All origins are allowed by default with cors()
 app.use(express.json());
 
 app.get("/", (req, res) => {
